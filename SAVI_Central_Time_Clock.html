@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Time Clock</title>
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #000000;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #clock {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: min(22vw, 42vh);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div id="clock">--:--</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+
+    // America/Chicago automatically handles Central Standard Time (CST)
+    // and Central Daylight Time (CDT) when daylight saving time applies.
+    const time = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Chicago",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    }).format(now);
+
+    document.getElementById("clock").textContent = time;
+  }
+
+  updateClock();
+
+  // Update frequently so the display changes at the correct minute.
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
